@@ -1,0 +1,347 @@
+{% include 'header.html' %}
+        <div class="pcoded-main-container">
+          <div class="pcoded-wrapper">
+            <!-- Menubar -->
+            {% include 'menu.html' %}
+            <!-- // end Menubar -->
+            <div class="pcoded-content">
+              <div class="pcoded-inner-content">
+                <!-- Main Content -->
+                <div class="main-body">
+                  <div class="page-wrapper">
+                    <div class="page-body">
+                      <div class="row">
+                        <div class="col-12 mt-3 mb-3">
+                          <h5>{{ details.first_name }} {{ details.last_name }}</h5>
+                          
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                          <div class="card bg-c-yellow update-card">
+                            <div class="card-block">
+                              <div class="row align-items-end">
+                                <div class="col-8">
+                                  <h4 class="text-white">${{ details.stock_value | floatformat:2 }}</h4>
+                                  <h6 class="text-white m-b-0">Stock Balance</h6>
+                                </div>
+                                <div class="col-4 text-right">
+                                  <div class="chartjs-size-monitor">
+                                    <div class="chartjs-size-monitor-expand">
+                                      <div class=""></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink">
+                                      <div class=""></div>
+                                    </div>
+                                  </div>
+                                  <canvas id="update-chart-1" height="50" style="display: block; width: 90px; height: 50px;" width="90" class="chartjs-render-monitor"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                          <div class="card bg-c-green update-card">
+                            <div class="card-block">
+                              <div class="row align-items-end">
+                                <div class="col-8">
+                                  <h4 class="text-white">${{ total_earning | floatformat:2 }}</h4>
+                                  <h6 class="text-white m-b-0">Total Profit</h6>
+                                </div>
+                                <div class="col-4 text-right">
+                                  <div class="chartjs-size-monitor">
+                                    <div class="chartjs-size-monitor-expand">
+                                      <div class=""></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink">
+                                      <div class=""></div>
+                                    </div>
+                                  </div>
+                                  <canvas id="update-chart-2" height="50" width="90" style="display: block; width: 90px; height: 50px;" class="chartjs-render-monitor"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                          <div class="card bg-c-pink update-card">
+                            <div class="card-block">
+                              <div class="row align-items-end">
+                                <div class="col-8">
+                                  <h4 class="text-white">${{ total_loss | floatformat:2 }}</h4>
+                                  <h6 class="text-white m-b-0">Total Loss</h6>
+                                </div>
+                                <div class="col-4 text-right">
+                                  <div class="chartjs-size-monitor">
+                                    <div class="chartjs-size-monitor-expand">
+                                      <div class=""></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink">
+                                      <div class=""></div>
+                                    </div>
+                                  </div>
+                                  <canvas id="update-chart-3" height="50" width="90" style="display: block; width: 90px; height: 50px;" class="chartjs-render-monitor"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                          <div class="card bg-c-lite-green update-card">
+                            <div class="card-block">
+                              <div class="row align-items-end">
+                                <div class="col-8">
+                                  <h4 class="text-white">$0</h4>
+                                  <h6 class="text-white m-b-0">Total Withdraw</h6>
+                                </div>
+                                <div class="col-4 text-right">
+                                  <div class="chartjs-size-monitor">
+                                    <div class="chartjs-size-monitor-expand">
+                                      <div class=""></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink">
+                                      <div class=""></div>
+                                    </div>
+                                  </div>
+                                  <canvas id="update-chart-4" height="50" width="90" style="display: block; width: 90px; height: 50px;" class="chartjs-render-monitor"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-9 col-md-12">
+                          <div class="card">
+                            <div class="card-header">
+                              <h5>Trading Analytics</h5>
+                              <div class="card-header-right">
+                                <ul class="list-unstyled card-option">
+                                  <li><i class="feather icon-maximize full-card"></i></li>
+                                  <li><i class="feather icon-minus minimize-card"></i></li>
+                                  <!-- <li><i class="feather icon-trash-2 close-card"></i></li> -->
+                                </ul>
+                              </div>
+                            </div>
+                            <div class="card-block">
+                              <div id="trade-analytics" style="height: 265px; overflow: hidden; text-align: left;">
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-12">
+                          {% if timelines %}
+                          <div class="card p-1">
+                            <div class="alert alert-light mb-0 p-1">
+                              <div class="d-flex">
+                                <div class="p-1 flex-fill"><small>Bal.</small></div>
+                                <div class="p-1 flex-fill"><small>Stk Rtn</small></div>
+                                <div class="p-1 flex-fill"><small>Exit</small></div>
+                                <div class="p-1 flex-fill"><small>Status</small></div>
+                              </div>
+                            </div>
+                            {% for t in timelines reversed  %}
+                              {% if t.status == 'profit' %}
+                              <div class="alert alert-success mb-1 p-1">
+                                <div class="d-flex">
+                                  <div class="p-1 flex-fill"><small>${{ t.entry_balance | floatformat:2 }}</small></div>
+                                  <div class="p-1 flex-fill"><small>${{ t.stake_return | floatformat:2 }}</small></div>
+                                  <div class="p-1 flex-fill"><small>${{ t.balance | floatformat:2 }}</small></div>
+                                  <div class="p-1 flex-fill">
+                                    <small>{{ t.status }}</small>
+                                  </div>
+                                </div>
+                              </div>
+                              {% else %}
+                              <div class="alert alert-danger mb-1 p-1">
+                                <div class="d-flex">
+                                  <div class="p-1 flex-fill"><small>${{ t.entry_balance | floatformat:2 }}</small></div>
+                                  <div class="p-1 flex-fill"><small>${{ t.stake_return | floatformat:2 }}</small></div>
+                                  <div class="p-1 flex-fill"><small>${{ t.balance | floatformat:2 }}</small></div>
+                                  <div class="p-1 flex-fill">
+                                    <small>{{ t.status }}</small>
+                                  </div>
+                                </div>
+                              </div>
+                              {% endif %}
+                            
+                            {% endfor %}
+                          {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end main content -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% include 'footer.html' %}
+
+  <script>
+    'use strict';
+    $(document).ready(function () {
+      var ctx = document.getElementById('update-chart-1').getContext("2d");
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: valincome('#fff', [25, 30, 20, 15, 20], '#fff'),
+        options: valincomebuildoption(),
+      });
+      var ctx = document.getElementById('update-chart-2').getContext("2d");
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: valincome('#fff', [10, 30, 20, 15, 30], '#fff'),
+        options: valincomebuildoption(),
+      });
+      var ctx = document.getElementById('update-chart-3').getContext("2d");
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: valincome('#fff', [25, 10, 20, 15, 20], '#fff'),
+        options: valincomebuildoption(),
+      });
+
+
+      function valincome(a, b, f) {
+        if (f == null) {
+          f = "rgba(0,0,0,0)";
+        }
+        return {
+          labels: ["1", "2", "3", "4", "5"],
+          datasets: [{
+            label: "",
+            borderColor: a,
+            borderWidth: 0,
+            hitRadius: 30,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            pointBorderWidth: 2,
+            pointHoverBorderWidth: 12,
+            pointBackgroundColor: Chart.helpers.color("#000000").alpha(0).rgbString(),
+            pointBorderColor: a,
+            pointHoverBackgroundColor: a,
+            pointHoverBorderColor: Chart.helpers.color("#000000").alpha(.1).rgbString(),
+            fill: true,
+            backgroundColor: Chart.helpers.color(f).alpha(1).rgbString(),
+            data: b,
+          }]
+        };
+      }
+
+      function valincomebuildoption() {
+        return {
+          maintainAspectRatio: false,
+          title: {
+            display: false,
+          },
+          tooltips: {
+            enabled: false,
+          },
+          legend: {
+            display: false
+          },
+          hover: {
+            mode: 'index'
+          },
+          scales: {
+            xAxes: [{
+              display: false,
+              gridLines: false,
+              scaleLabel: {
+                display: true,
+                labelString: 'Month'
+              }
+            }],
+            yAxes: [{
+              display: false,
+              gridLines: false,
+              scaleLabel: {
+                display: true,
+                labelString: 'Value'
+              },
+              ticks: {
+                min: 1,
+              }
+            }]
+          },
+          elements: {
+            point: {
+              radius: 4,
+              borderWidth: 12
+            }
+          },
+          layout: {
+            padding: {
+              left: 10,
+              right: 0,
+              top: 15,
+              bottom: 0
+            }
+          }
+        };
+      }
+    });
+
+
+    var options = {
+          series: [{
+            data: [
+              {% for item in profit_loss %}
+                {{ item | floatformat:2 }}
+                {% if not forloop.last %},{% endif %}
+              {% endfor %}
+            ]
+          }],
+          xaxis:{
+            categories: [
+            {% for item in timestamps %}
+                '{{ item }}'
+                {% if not forloop.last %},{% endif %}
+              {% endfor %}
+            ],
+            title: {
+              text: 'Timestamp'
+            },
+          },
+          chart: {
+          type: 'area',
+          stacked: false,
+          height: 350,
+          zoom: {
+            type: 'x',
+            enabled: true,
+            autoScaleYaxis: true
+          },
+          toolbar: {
+            autoSelected: 'zoom'
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        markers: {
+          size: 0,
+        },
+        title: {
+          align: 'left'
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100]
+          },
+        },
+        yaxis: {
+          title: {
+            text: 'Profit / Loss ($)'
+          },
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#trade-analytics"), options);
+        chart.render();
+  </script>

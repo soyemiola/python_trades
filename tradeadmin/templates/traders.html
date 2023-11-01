@@ -1,0 +1,68 @@
+{% include 'header.html' %}
+        <div class="pcoded-main-container">
+          <div class="pcoded-wrapper">
+            <!-- Menubar -->
+            {% include 'menu.html' %}
+            <!-- // end Menubar -->
+            <div class="pcoded-content">
+              <div class="pcoded-inner-content">
+                <!-- Main Content -->
+                <div class="main-body">
+                  <div class="page-wrapper">
+                    <div class="page-body">
+                      <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Traders</h5>
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                              <li><a href="{% url 'new_trader' %}"><i class="feather icon-plus" title="add new record"></i>Add Record </a></li>
+                                        </ul>
+                                      </div>
+                                </div>
+                                <div class="card-block table-border-style">
+                                    {% if traders %}
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Opening Balance</th>
+                                                    <th>Current Balance</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                {% for s in traders %}
+                                                <tr>
+                                                    <th scope="row">{{ forloop.counter }} </th>
+                                                    <td><a href="{% url 'trader_analytics' trader_name=s.first_name %}">{{ s.first_name }} {{ s.last_name }}</a></td>
+                                                    <td>{{ s.email }}</td>
+                                                    <td>$100</td>
+                                                    <td>${{ s.stock_value | floatformat:2 }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% endif %}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end main content -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include 'footer.html' %}

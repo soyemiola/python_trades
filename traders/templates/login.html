@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <title>9jaFx</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="#">
+    <meta name="keywords" content="">
+    <meta name="author" content="#">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'files/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'files/assets/icon/themify-icons/themify-icons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'files/assets/icon/icofont/css/icofont.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'files/assets/icon/feather/css/feather.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/style.css' %}"> 
+  </head>
+<body>
+  <div class="theme-loader">
+    <div class="ball-scale">
+      <div class="contain">
+        <div class="ring">
+          <div class="frame"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="login-block" style="background:url('files/assets/images/bg.jpg') no-repeat;">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <form class="md-float-material form-material" method="post" action="">
+            <div class="text-center">
+                
+            </div>
+            <div class="auth-box card">
+              <div class="card-block">
+                <div class="row m-b-20">
+                  <div class="col-md-12">
+                    <h3 class="text-center">Trading Portal</h3>
+                  </div>
+                </div>
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <div class="row m-t-30">
+                  <div class="col-md-12">
+                    <input type="hidden" name="robot">
+                    <button type="submit" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Sign
+                    in</button>
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{message.tags}} mb-1 mt-1">
+                            <strong>{{ message }}</strong>
+                        </div>
+                        {% endfor %}                                    
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% include 'footer.html' %}
