@@ -1,6 +1,6 @@
 import pymongo
 
-url = "mongodb+srv://test:test1234@djangodb.mcqqld9.mongodb.net/"
+url = "" # add mongodb connection string
 
 client = pymongo.MongoClient(url)
 
